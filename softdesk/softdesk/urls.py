@@ -19,19 +19,27 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from rest_framework.routers import DefaultRouter
 from app.views import ProjectViewSet, IssueViewSet, CommentViewSet, CollaboratorViewSet
+from customauth.views import UserViewSet
 
 router = DefaultRouter()
-router.register(r'projects', ProjectViewSet)
-router.register(r'projects/(?P<project_id>\d+)/collaborators', CollaboratorViewSet)
-router.register(r'projects/(?P<project_id>\d+)/issues', IssueViewSet, basename='project-issues')
-router.register(r'projects/(?P<project_id>\d+)/issues/(?P<issue_id>\d+)/comments', CommentViewSet, basename='issue-comments')
+router.register(r"projects", ProjectViewSet)
+router.register(r"projects/(?P<project_id>\d+)/collaborators", CollaboratorViewSet)
+router.register(
+    r"projects/(?P<project_id>\d+)/issues", IssueViewSet, basename="project-issues"
+)
+router.register(
+    r"projects/(?P<project_id>\d+)/issues/(?P<issue_id>\d+)/comments",
+    CommentViewSet,
+    basename="issue-comments",
+)
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path("admin/", admin.site.urls),
+    path("api-auth/", include("rest_framework.urls")),
+    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("signup/", UserViewSet.as_view({"post": "create", "get": "list"}), name="user-signup"),
 ]
 
 urlpatterns += router.urls
