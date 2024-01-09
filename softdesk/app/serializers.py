@@ -46,7 +46,7 @@ class CommentSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         validated_data["author"] = user
 
-        issue_id = self.context["request"].data.get("issue_id")
+        issue_id = self.context["view"].kwargs.get("issue_id")
         issue_instance = Issue.objects.get(pk=issue_id)
         validated_data["issue"] = issue_instance
 

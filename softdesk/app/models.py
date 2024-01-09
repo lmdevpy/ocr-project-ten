@@ -63,7 +63,7 @@ class Issue(models.Model):
 
 
 class Comment(models.Model):
-    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name="comments")
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name="comments", blank=True)
     text = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
     created_time = models.DateTimeField(auto_now_add=True)
